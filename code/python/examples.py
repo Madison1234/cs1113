@@ -15,8 +15,7 @@ if (x > 0 or y == 6):
 else:
     x = 1
     z = 11
-
-
+    
 times = 10
 while (times > 0):
     print ("Hello")
