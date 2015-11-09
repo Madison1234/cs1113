@@ -13,8 +13,9 @@ def hs(n):
                 l = l + 1
     else:
         print (n)
-        
+             
     print (l)
+    return None
 
 print('test 1')
 hs(1)
