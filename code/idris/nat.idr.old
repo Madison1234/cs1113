@@ -1,0 +1,112 @@
+module natnat
+
+import bool
+
+import pair
+
+data nat = O | S nat
+
+isZero: nat -> bool
+isZero O = true
+isZero _ = false
+
+succ: nat -> nat
+succ n = S n
+
+||| returns the predecessor of any given nat
+pred: nat -> nat
+pred O = O
+pred (S n) = n
+
+
+||| return true if the argument is even otherwise false
+evenb: nat -> bool
+evenb O = true
+evenb (S O) = false
+evenb (S (S n)) = evenb n
+
+oddb: nat -> bool
+oddb n  = not (evenb n)
+
+||| given a pair of natural numbers, return its sum
+addp: pair nat nat -> nat
+addp (mkPair O m) = m
+addp (mkPair (S n) m) = S (addp (mkPair n m))
+
+r4: nat
+r4 = addp (mkPair (S O) (S (S O)))
+
+
+add: nat -> nat -> nat
+add O m = m
+add (S n) m = S (add n m)
+
+pf: nat -> nat 
+pf = add (S (S O))
+
+
+
+
+
+
+--addp1: nat
+--addp1 = addp (mkPair (S (S O)) (S O))
+
+--Part 2
+
+||| given a pair of natural numbers, return its sum
+multp: pair nat nat -> nat
+multp (mkPair O m) = O
+multp (mkPair (S n) m) = addp (mkPair m (multp (mkPair n m )))
+
+factp: nat -> nat
+factp O = (S O)
+factp (S n') = multp (mkPair (S n') (factp n'))
+
+subp: pair nat nat -> nat
+subp (mkPair O m) = O
+subp (mkPair n O) = n
+subp (mkPair (S n) (S m)) = subp (mkPair n m)
+
+--HW #5
+expp: pair nat nat -> nat
+expp (mkPair x O) = (S O)
+expp (mkPair x (S n)) = multp (mkPair x (exp (mkPair x n)))
+
+expp9: nat
+expp9 = exp (mkPair (S (S O)) (S O))
+
+
+--HW #6
+lep: pair nat nat -> bool
+lep (mkPair O m ) = true
+lep (mkPair n O) = false 
+lep (mkPair (S n) (S m)) = lep (mkPair n m)
+
+--HW #7
+eqp: pair nat nat -> bool
+eqp (mkPair n m) = isZero (subp (mkPair n m))
+
+--HW #8
+gtp: pair nat nat -> bool
+gtp (mkPair (S n) (S m)) = not (lep (mkPair n m))
+
+--HW #9
+gep: pair nat nat -> bool
+gep (mkPair m O) = true
+gep (mkPair O n) = false
+gep (mkPair (S m) (S n)) = gep (mkPair m n)
+
+--HW #10
+ltp:pair nat nat -> bool
+ltp (mkPair (S n) (S m)) = not (gep (mkPair n m))
+
+
+
+--Fibonacci
+fib: nat -> nat
+fib (S O) = O
+fib (S (S O)) = (S O)
+fib (S (S n)) = addp (mkPair (fib (S n) ) (fib n))
+
+
